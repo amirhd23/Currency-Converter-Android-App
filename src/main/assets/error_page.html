@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Error page</title>
+    <script>
+        window.onload = function() {
+            var elem = document.getElementById("message");
+            var msg = window.AndroidUtil.getErrorMessage();
+            elem.innerText = msg;
+        }
+
+    </script>
+    <style>
+        body{
+            background: #BBDEFB;
+            color: #303F9F;
+        }
+
+    </style>
+</head>
+<body>
+<h2 id="message"></h2>
+</body>
+
+</html>

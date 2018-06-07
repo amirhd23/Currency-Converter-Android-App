@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+
+
+    <title>chart page</title>
+    <link rel="stylesheet" href="file:///android_asset/charts.css" />
+    <script src="file:///android_asset/jquery-3.2.1.min.js"></script>
+    <script src="file:///android_asset/currencycharts.4d.js"></script>
+
+    <script type="text/javascript">
+            var charts = '';
+            var curFrom = window.AndroidUtil.getBaseCurrency();
+            var curTo = window.AndroidUtil.getTargetCurrency();
+
+            var curAmount = 1.00;
+            var renderAtEveryTick = true;
+            var invalidServerResponse = 'Invalid server response';
+            var invalidRatesResponse = 'Could not load rates, please try later.';
+            var reportIt = 'Click here to send a report to us!';
+            var copyIt = 'Or copy the debug information in the text box below and send it to us as ';
+            var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            var close = 'close';
+            var UTC = 'UTC';
+            var debugInfo = 'Error loading the chart';
+            /*var imgDir = 'http://s.xe.com/themes/xe/images';*/
+
+            var initializeXeCharts = function() {
+                if (curFrom !== curTo) {
+                            charts = $('#graphWrapper').xecurrencycharts({
+            chart_background_image:'file:///android_asset/xe_square.png',
+            from_currency:curFrom,
+            to_currency:curTo,
+            currency_amount:curAmount,
+            chart_summary_line_colors:'#142e44',
+            chart_summary_line_fillcolor:'#6d779e',
+            chart_line_colors:'#6d779e',
+            chart_line_gradient_stop0:'#6d779e',
+            chart_line_gradient_stop1:'#f3f3f7',
+            chart_ylabels_fillcolor:'#d8d9e9',
+            chart_background_grid_color:'#e0e0e0',
+            chart_label_bar_color:'#e0e0e0',
+            feedback_email:'feedback@xe.com',
+            chart_gutter_left: 0,
+            chart_gutter_right: 50,
+            chart_gutter_top: 40,
+            initial_zoom: '1Y',
+            source: 'https://cors-anywhere.herokuapp.com/' +'http://www.xe.com/currencycharts/currates.php',
+            chart_background_grid_hsize:67,
+            on_zoom_change:function(zoom){ $('#chartForm #inverseBtn a').attr('href', '/currencycharts/?from='+curTo+'&to='+curFrom+'&view='+zoom); $('input#view').val(zoom); },
+            update_url: true,
+            display_desc: true,
+            append_data: null
+        });
+                }
+            }
+
+    </script>
+    <script type="text/javascript">
+            $(document).ready(initializeXeCharts);
+    </script>
+
+</head>
+<body>
+
+<div class='module clearfix '>
+    <h4 id="credit_header" style="margin-left:auto; margin-right:auto">chart from www.xe.com</h4>
+    <div id='graphWrapper' class='detailChart-wrapper  '>
+        <div id='infoMessage' class='norates'><img class='loaderCls' alt=''
+                                                   src='file:///android_asset/loader.gif'
+                                                   border='0'/></div>
+        <canvas width="460" height="400" id="rates_detail" class="detailChart-graph"></canvas>
+        <div class="charts_titles">
+            <div id="rates_detail_title" class="detailChart-title"></div>
+            <div id="rates_detail_desc" class="detailChart-description"></div>
+        </div>
+        <div id="rates_detail_event" class="detailChart-event">
+            <div id="rates_detail_dot" class="detailChart-dot"></div>
+            <div id="rates_detail_line" class="detailChart-line"></div>
+        </div>
+        <div class="magnifier-wrapper magnifierWrapper ">
+            <canvas width="460" height="50" id="rates_line" class="magnifier-lineGraph"></canvas>
+
+            <div id="magnifier" class="magnifier">
+                <div id="magnifierLeft" class="magnifier-left"></div>
+                <div id="leftResizeable" class="magnifier-leftResizable">
+                    <div class="leftResizeable"></div>
+                </div>
+                <div id="magnifierRight" class="magnifier-right"></div>
+                <div id="rightResizeable" class="magnifier-rightResizable">
+                    <div class="rightResizeable"></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="graphButtons detailChart-buttons">
+            <input type="button" id='button_12h' onClick="charts.changeMagnifier(this, '12h')"
+                   value="12h"/>
+            <input type="button" id='button_1D' onClick="charts.changeMagnifier(this, '1D')"
+                   value="1D"/>
+            <input type="button" id='button_1W' onClick="charts.changeMagnifier(this, '1W')"
+                   value="1W"/>
+            <input type="button" id='button_1M' onClick="charts.changeMagnifier(this, '1M')"
+                   value="1M"/>
+            <input type="button" id='button_1Y' onClick="charts.changeMagnifier(this, '1Y')"
+                   value="1Y" class='selected'/>
+            <input type="button" id='button_2Y' onClick="charts.changeMagnifier(this, '2Y')"
+                   value="2Y"/>
+            <input type="button" id='button_5Y' onClick="charts.changeMagnifier(this, '5Y')"
+                   value="5Y"/>
+            <input type="button" id='button_10Y' onClick="charts.changeMagnifier(this, '10Y')"
+                   value="10Y"/>
+        </div>
+    </div>
+
+
+</div>
+<div class='module clearfix modAlt'></div>
+
+</body>
+
+</html>

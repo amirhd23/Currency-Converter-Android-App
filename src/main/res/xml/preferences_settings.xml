@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/download_category_title">
+    <CheckBoxPreference
+        android:key="@string/wifi_settings_key"
+        android:title="@string/wifi_setting_title"
+        android:summary="@string/wifi_setting_summary"
+        android:defaultValue="true" />
+
+        <ListPreference
+            android:key="@string/sync_frequency_settings_key"
+            android:title="@string/sync_freq_setting_title"
+            android:entries="@array/frequency_interval_title"
+            android:entryValues="@array/frequency_interval_keys"
+            android:summary="%s"
+            android:defaultValue="none"
+            />
+
+        <ListPreference
+            android:key="@string/preferred_currency_key"
+            android:title="@string/preferred_currency_setting_title"
+            android:entries="@array/preferred_currencies_title"
+            android:entryValues="@array/preferred_currencies_keys"
+            android:summary="%s"
+            android:defaultValue="USD"
+            />
+    </PreferenceCategory>
+
+</PreferenceScreen>
